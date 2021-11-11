@@ -1,0 +1,261 @@
+* {
+    margin: 0;
+    padding: 0;
+} 
+
+html {
+    font-family: 'Prompt', sans-serif;
+    color: white;
+}
+
+body {
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#overlay {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    z-index: 5;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
+.overlay-container {
+    background-color: blanchedalmond;
+    height: 30%;
+    width: 50%;
+    font-size: .8em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1em;
+}
+
+.game-container {
+    height: 100vh;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.game-board {
+    height: 85vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.computer {
+    background: rgb(77, 84, 94);
+    height: 8%;
+    width: 100%;
+    position: relative;
+    border-radius: 10em;
+}
+
+#computer-choices {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    flex: row; 
+    background-color: transparent;
+    
+}
+
+.comp-choice {
+    display: flex;
+    background: white;
+    width: calc(1vw + 4vh);
+    height: calc(1vw + 4vh);
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid black
+}
+
+.computer_cover {
+    width: 100%;
+    height: 90%;
+    background-color: transparent;
+    z-index: 6;
+    position: absolute;
+    border-radius: 10em;
+    bottom: 0;
+}
+
+.answer_cover {
+    background: rgb(77, 84, 94);
+    border: 2px solid black;
+    animation: cover 2s linear forwards normal;
+}
+
+@keyframes cover {
+    0% {
+        opacity: .6;
+        transform: rotateX(-70deg);
+        transform-origin: bottom;
+      }
+
+    25% {
+        opacity: 1;
+    }
+    
+      100% {
+        opacity: 1;
+        transform: rotateX(0);
+        transform-origin: bottom;
+      }
+}
+
+
+.log-container {
+    display: flex;
+    flex-direction: row;
+    height: 80%;
+    width: 80%;
+}
+#log {
+    width: 60%;
+    height: 100%;
+    background: rgb(77, 84, 94);
+    border: black 5px solid;
+    border-top: none;
+    border-bottom: none;
+}
+
+.rounds {
+    height:100%;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.round {
+    width: 100%;
+    height: 10%;
+    display: grid;
+    grid-template: 1fr / 1fr 1fr 1fr 1fr;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-items: center;
+    border-bottom: 1px black solid;
+
+}
+
+.results {
+    background-color: white;
+    color: black;
+    text-align: center;
+    height: 100%;
+    width: 40%;
+}
+
+.player_response {
+    background-color: rgb(77, 84, 94);
+    height: 12%;
+    max-height: 100px;
+    width: 100%;
+    border-radius: 10em;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.player-choice {
+    border-radius: 50%;
+    border: .1px solid rgb(179, 177, 177)
+}
+
+.player-choice:hover {
+    box-shadow: -1px 1px 5px white;
+}
+
+.player-choice:active {
+    box-shadow: none;
+    transform: scale(-.95);
+}
+
+.game-start {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 2em;
+}
+
+.game-start > button {
+    flex: .3;
+}
+
+#red{
+    background: red;
+    border-radius: 50%;
+    width: calc(1vw + 4vh);
+    height: calc(1vw + 4vh);
+    
+}
+
+#orange{
+    background: orange;
+    border-radius: 50%;
+    width: calc(1vw + 4vh);
+    height: calc(1vw + 4vh);
+}
+
+
+
+#yellow{
+    background: yellow;
+    border-radius: 50%;
+    width: calc(1vw + 4vh);
+    height: calc(1vw + 4vh);
+}
+
+#green{
+    background: green;
+    border-radius: 50%;
+    width: calc(1vw + 4vh);
+    height: calc(1vw + 4vh);
+}
+
+#blue{
+    background: blue;
+    border-radius: 50%;
+    width: calc(1vw + 4vh);
+    height: calc(1vw + 4vh);
+}
+
+#purple{
+    background: purple;
+    border-radius: 50%;
+    width: calc(1vw + 4vh);
+    height: calc(1vw + 4vh);
+}
+
+#white{
+    background: rgb(255, 255, 255);
+    border-radius: 50%;
+    width: calc(1vw + 4vh);
+    height: calc(1vw + 4vh);
+}
+
+#black{
+    background: black;
+    border-radius: 50%;
+    width: calc(1vw + 4vh);
+    height: calc(1vw + 4vh);
+}
