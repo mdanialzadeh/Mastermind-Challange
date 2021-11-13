@@ -181,11 +181,11 @@ function submitRound () {
 function gameOver(result) {
     switch (result) {
         case "win":
-            console.log("winner")
+            alert("winner")
             break;
     
         case "lose":
-            console.log("loser")
+            alert("loser")
             break;
     } compchoice_container.classList.add("answer_show")
 }
