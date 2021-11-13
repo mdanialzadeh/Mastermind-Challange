@@ -1,22 +1,18 @@
 
 const computerChoices = document.querySelectorAll(".comp-choice")
-const playerButtons = document.querySelectorAll(".player-choice")
+const playerButtons = document.querySelectorAll("#player-choice")
 const gameButtons = document.querySelectorAll(".game-buttons")
 const roundNumber = document.querySelector(".round_number")
 const compchoice_container = document.querySelector(".computer_cover")
-
+const log = document.getElementById("log")
 
 var log_array = []
-var player_choice = []
-var peg_ammount = 0
-var log = document.getElementById("log")
 var secret = []
-let round = 0
-
+var round = 0
 
 // interface button functionality
-gameButtons[0].addEventListener('click',() => endRound(secret,player_choice))
-gameButtons[1].addEventListener('click',() => removechoice())
+gameButtons[0].addEventListener('click',() => submitRound())
+gameButtons[1].addEventListener('click',() => removeChoice())
 gameButtons[2].addEventListener('click', () => gameStart())
 
 
@@ -39,26 +35,26 @@ function getSecret () {
 function playerChoice () {
     Array.from(playerButtons).forEach(function(btn) {
         btn.addEventListener('click', function() {
-          addchoices(this.value, this.id);
+          addChoices(this.value, this.className);
         });
       });
 }
 
 
-// function to keep track of current round//
+// keep track of current round//
 
 function currentRound() {
-    round++;
-    roundNumber.innerHTML = ("round: " + round);
+    if (round < 10) {
+        round++;
+        roundNumber.innerHTML = ("round: " + round);
+    }
 }
 
 
-// function to remove choice from player round selection //
-function removechoice () {
+// remove choice from player round selection //
+function removeChoice () {
     
-    if (peg_ammount > 0) {
-    peg_ammount--;
-    player_choice.pop();
+    if (log_array.length > 0) { 
     log_array.pop();
     deleteChoice()
     }
@@ -67,28 +63,24 @@ function removechoice () {
 
 // push choices to player selection array and add/delete peg object to log of the current round // 
 
-function addchoices (number,color){
-  
-    if (peg_ammount <= 3) { 
+function addChoices (number,color){
+    if (log_array.length <= 3) { 
          function Peg (number,color) {
          this.number = number;
          this.color = color;
      }
-        peg_ammount++;
-        player_choice.push(number);
         let pegs = new Peg (number,color)
         log_array.push(pegs)
-        console.log(player_choice)
-        appendChoice()
+        appendChoice(color)
     }
     
 }
 
-function appendChoice () {
+function appendChoice (color) {
     
     let currentdiv = document.getElementById(round);
     const newpeg = document.createElement("div")
-    newpeg.id = (log_array[peg_ammount-1].color)
+    newpeg.setAttribute("class",color)
     currentdiv.insertAdjacentElement('beforeend', newpeg)   
 }
 
@@ -107,30 +99,93 @@ function gameStart () {
     currentRound()
     playerChoice();
     setTimeout (() => {getSecret()},1000);
+    setTimeout (() => {appendSecret()},2000)
 }
 
-function endRound () {
-   
-    let round_choice = []
+function appendSecret () {
+    
+    secret.forEach((answer,index) => {
+    const div = document.querySelector(("#comp-choice-" + index));    
+    div.classList.add(assignColor(answer))
+    div.setAttribute("value",answer)
+    })
+}
 
-    if (player_choice.length === secret.length) {
-        log_array = [];
-        peg_ammount = 0;
-        round_choice = player_choice.splice(0)
-        console.log(round_choice)
-        console.log(secret)
+function assignColor (value) {
+
+const result = ({
+    0: "red",
+    1: "orange",
+    2: "yellow",
+    3: "green",
+    4: "blue",
+    5: "purple",
+    6: "pink",
+    7: "white",
+
+})[value]
+
+return result
+    
+}
+
+function submitRound () {
+   
+    if (log_array.length > 3) {
+        resolveRound();
         currentRound();
-        resolveRound(round_choice,secret);
+        log_array = [];
     }
     else {
         alert(" you need to have 4 pegs selected before submiting your response.")
     }
+ }   
+
+    function resolveRound() {
+    const resultContainer = document.querySelectorAll(".result")
+    let computer = secret.slice()    
+    let player = (log_array.map(peg => {return peg.number}))
+    let correct = ""
+    let matched = ""
     
-    function resolveRound(round_choice,secret) {
+
+    console.log(computer)
+    console.log(player)
+
+    if (player.every((value,index) => value === computer[index])) {
+        gameOver("win")
+    } 
+    else if (round < 10) {
         
-        
-        if (round_choice == secret) {
-            console.log("ccorect")
-        }
-    }
+        let x = computer.filter((value,index) => player[index].includes(value))
+            correct = x.length
+
+        if (x.length > 0) {
+            let newarr = computer.filter((value,index) => !player[index].includes(value))
+            let newguess = player.filter((value,index) => !computer[index].includes(value))
+            let y = newarr.filter(value => newguess.includes(value));
+            matched = y.length
+           
+        } else {
+            let y = player.filter(value => computer.includes(value));
+            matched = y.length
+         }
+
+         
+    }else { gameOver("lose")}
+
+    resultContainer[round-1].innerHTML = "Right Color and Place: " + correct +  "<br/> Right Color/Wrong place: " + matched; 
+}
+
+
+function gameOver(result) {
+    switch (result) {
+        case "win":
+            console.log("winner")
+            break;
+    
+        case "lose":
+            console.log("loser")
+            break;
+    } compchoice_container.classList.add("answer_show")
 }
