@@ -46,7 +46,7 @@ function playerChoice () {
 function currentRound() {
     if (round < 10) {
         round++;
-        roundNumber.innerHTML = ("round: " + round);
+        roundNumber.innerHTML = ("Round: " + round);
     }
 }
 
@@ -149,8 +149,8 @@ function submitRound () {
     let matched = ""
     
 
-    console.log(computer)
-    console.log(player)
+    console.log("answer" ,computer)
+    console.log("guess" ,player)
 
     if (player.every((value,index) => value === computer[index])) {
         gameOver("win")
@@ -158,23 +158,25 @@ function submitRound () {
     else if (round < 10) {
         
         let x = computer.filter((value,index) => player[index].includes(value))
-            correct = x.length
+        correct = x.length
 
-        if (x.length > 0) {
-            let newarr = computer.filter((value,index) => !player[index].includes(value))
-            let newguess = player.filter((value,index) => !computer[index].includes(value))
-            let y = newarr.filter(value => newguess.includes(value));
-            matched = y.length
-           
+        let newarr = computer.filter((value,index) => !player[index].includes(value))
+        let newguess = player.filter((value,index) => !computer[index].includes(value))
+        
+        
+        a = newarr.filter(value => newguess.includes(value))
+        b = newguess.filter(value => newarr.includes(value))
+
+        if (a.length > b.length) {
+            matched = b.length
         } else {
-            let y = player.filter(value => computer.includes(value));
-            matched = y.length
-         }
-
+            matched = a.length
+        }
          
+
     }else { gameOver("lose")}
 
-    resultContainer[round-1].innerHTML = "Right Color and Place: " + correct +  "<br/> Right Color/Wrong place: " + matched; 
+    resultContainer[round-1].innerHTML = "Correct Color/Position: " + correct +  "<br/> Correct Color/Incorrect Position: " + matched; 
 }
 
 
@@ -182,6 +184,7 @@ function gameOver(result) {
     switch (result) {
         case "win":
             alert("winner")
+            
             break;
     
         case "lose":
