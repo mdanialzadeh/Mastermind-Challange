@@ -63,7 +63,7 @@ function removeChoice () {
 }
 
 
-// push choices to player selection array and add/delete peg object to log of the current round // 
+// constructor function to create peg object when button is created and push it to the log_array // 
 
 function addChoices (number,color){
     if (log_array.length <= 3) { 
@@ -78,6 +78,7 @@ function addChoices (number,color){
     
 }
 
+// append the peg object to the current round log //
 function appendChoice (color) {
     
     let currentdiv = document.getElementById(round);
@@ -103,6 +104,8 @@ function gameStart () {
     setTimeout (() => {getSecret()},1000);
     setTimeout (() => {appendSecret()},2000)
 }
+
+// push secret to board //
 
 function appendSecret () {
     
@@ -186,7 +189,6 @@ function gameOver(result) {
     document.querySelector('#game-over').style.visibility ="visible";
     switch (result) {
         case "win":
-            game
             Destiny.innerHTML = "You WIN!"
             break;
     
