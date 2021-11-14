@@ -4,6 +4,7 @@ const playerButtons = document.querySelectorAll("#player-choice")
 const gameButtons = document.querySelectorAll(".game-buttons")
 const roundNumber = document.querySelector(".round_number")
 const compchoice_container = document.querySelector(".computer_cover")
+const Destiny = document.querySelector("#Destiny")
 const log = document.getElementById("log")
 
 var log_array = []
@@ -11,9 +12,10 @@ var secret = []
 var round = 0
 
 // interface button functionality
-gameButtons[0].addEventListener('click',() => submitRound())
-gameButtons[1].addEventListener('click',() => removeChoice())
-gameButtons[2].addEventListener('click', () => gameStart())
+gameButtons[0].addEventListener('click',() => submitRound());
+gameButtons[1].addEventListener('click',() => removeChoice());
+gameButtons[2].addEventListener('click',() => gameStart());
+gameButtons[3].addEventListener('click',() => window.location.reload());
 
 
 // Get random numbers from random.org and push them to the secret variable //
@@ -181,14 +183,17 @@ function submitRound () {
 
 
 function gameOver(result) {
+    document.querySelector('#game-over').style.visibility ="visible";
     switch (result) {
         case "win":
-            alert("winner")
-            
+            game
+            Destiny.innerHTML = "You WIN!"
             break;
     
         case "lose":
-            alert("loser")
+            Destiny.innerHTML = "Sorry you Lose"
             break;
-    } compchoice_container.classList.add("answer_show")
+    } 
+    
+    compchoice_container.classList.add("answer_show")
 }
