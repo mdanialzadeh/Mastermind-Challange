@@ -2,10 +2,13 @@
 const computerChoices = document.querySelectorAll(".comp-choice")
 const playerButtons = document.querySelectorAll("#player-choice")
 const gameButtons = document.querySelectorAll(".game-buttons")
+const infoButton = document.querySelector(".info-button")
+const closeButton = document.querySelector(".close")
 const roundNumber = document.querySelector(".round_number")
 const compchoice_container = document.querySelector(".computer_cover")
 const Destiny = document.querySelector("#Destiny")
 const log = document.getElementById("log")
+const rulesOverlay = document.getElementById("rules")
 
 var log_array = []
 var secret = []
@@ -16,6 +19,8 @@ gameButtons[0].addEventListener('click',() => submitRound());
 gameButtons[1].addEventListener('click',() => removeChoice());
 gameButtons[2].addEventListener('click',() => gameStart());
 gameButtons[3].addEventListener('click',() => window.location.reload());
+infoButton.addEventListener('click',() => showRules());
+closeButton.addEventListener('click',() => closeRules());
 
 
 // Get random numbers from random.org and push them to the secret variable //
@@ -31,6 +36,14 @@ function getSecret () {
 
 }
 
+
+function showRules() {
+    rulesOverlay.style.visibility="visible";
+}
+
+function closeRules() {
+    rulesOverlay.style.visibility="hidden";
+}
 
 // player choice buttons functionality //
 
@@ -134,6 +147,8 @@ return result
     
 }
 
+
+
 function submitRound () {
    
     if (log_array.length > 3) {
@@ -150,9 +165,29 @@ function submitRound () {
     const resultContainer = document.querySelectorAll(".result")
     let computer = secret.slice()    
     let player = (log_array.map(peg => {return peg.number}))
-    let correct = ""
-    let matched = ""
+    let correctArr = []
+    let matchedArr = []
     
+
+        function correct() {
+        let hint = document.createElement("div");
+        hint.classList.add("correct")
+        resultContainer[round-1].insertAdjacentElement("beforeend",hint)
+        }
+
+        function matched() {
+        let hint = document.createElement("div");
+        hint.classList.add("matched")
+        resultContainer[round-1].insertAdjacentElement("beforeend",hint)
+        }
+
+        function missed() {
+            let hint = document.createElement("div");
+            hint.classList.add("missed")
+            resultContainer[round-1].insertAdjacentElement("beforeend",hint)
+        }
+
+
 
     console.log("answer" ,computer)
     console.log("guess" ,player)
@@ -163,7 +198,7 @@ function submitRound () {
     else if (round < 10) {
         
         let x = computer.filter((value,index) => player[index].includes(value))
-        correct = x.length
+        correctArr = x
 
         let newarr = computer.filter((value,index) => !player[index].includes(value))
         let newguess = player.filter((value,index) => !computer[index].includes(value))
@@ -173,15 +208,18 @@ function submitRound () {
         b = newguess.filter(value => newarr.includes(value))
 
         if (a.length > b.length) {
-            matched = b.length
+            matchedArr = b
         } else {
-            matched = a.length
+            matchedArr = a
         }
-         
+       
+    correctArr.forEach(value => correct(value));
+    matchedArr.forEach(value => matched(value));
+    let missedArr = Array.from(Array(4 - (correctArr.length + matchedArr.length)).keys());
+    missedArr.forEach(value => missed(value));
 
     }else { gameOver("lose")}
 
-    resultContainer[round-1].innerHTML = "Correct Color/Position: " + correct +  "<br/> Correct Color/Incorrect Position: " + matched; 
 }
 
 

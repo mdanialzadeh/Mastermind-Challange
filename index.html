@@ -21,6 +21,7 @@
                     <div id="comp-choice-2" class = "fill"></div>
                     <div id="comp-choice-3" class = "fill"></div>
                 </div>
+                <button class="info-button">Rules</button>
                 <div class = computer_cover></div>
             </div>
 
@@ -91,7 +92,22 @@
                 <ol>
                     <li> At the start of the game the computer will randomly select a pattern of four differnt colored pegs from a total of 8 colors</li>
                     <li> Players will have 10 rounds to attempt to guess the correct color combination</li>
-                    <li> At the end of each round  the computer will provide feedback in regards to if your color guess contains pegs in the correct color and position as well as any pegs that are the correct color but incorrect position</li>
+                    <li> At the end of each round  the computer will provide feedback in regards to if your color guess contains pegs in the correct color and position as well as any pegs that are the correct color but incorrect position</li><br>
+                    <div class="rules">
+                        <div class ="rule">
+                            <object class="correct"></object>
+                            <p>  correct color and correct position</p>
+                        </div>
+                        <div class ="rule">
+                            <object class="matched"></object>
+                            <p>  correct color and wrong position</p>
+                        </div>
+                        <div class ="rule">
+                            <object class="missed"></object>
+                            <p> No Matching color or position</p>
+                        </div>
+                    </div>
+                        
                 </ol>
             <button id="start_button" class="game-buttons">START</button>     
         </div>
@@ -100,9 +116,27 @@
         <div class="overlay-container">
              <p id="Destiny"></p>   
             <button id="newgame" class="game-buttons">New Game</button>
-            
         </div>
 
+    </div>
+    <div id="rules" class="overlay" style="visibility: hidden;">
+        <div id = "rules-container" class = overlay-container>
+            <button class = "close">X</button>
+            <div class="rules">
+                <div class ="rule">
+                    <object class="correct"></object>
+                    <p>  correct color and correct position</p>
+                </div>
+                <div class ="rule">
+                    <object class="matched"></object>
+                    <p>  correct color and wrong position</p>
+                </div>
+                <div class ="rule">
+                    <object class="missed"></object>
+                    <p> No Matching color or position</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
